@@ -24,7 +24,7 @@
           </td>
           <td>
             <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
-            <button class="btn btn-outline-danger btn-sm" @click='delModal(item)'>刪除</button>
+            <button class="btn btn-outline-danger btn-sm" @click="delModal(item)">刪除</button>
           </td>
         </tr>
       </tbody>
@@ -200,7 +200,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-danger" @click="updateProduct(true)">確認刪除</button>
+            <button type="button" class="btn btn-danger" @click="delProduct">確認刪除</button>
           </div>
         </div>
       </div>
@@ -238,21 +238,18 @@ export default {
       }
       $("#productModal").modal("show");
     },
-    delModal(item){
-      this.tempProduct = Object.assign({}, item);
-      $('#delProductModal').modal('show');
+    delModal(item) {
+      this.tempProduct = item;
+
+      $("#delProductModal").modal("show");
     },
-    updateProduct(del) {
+    updateProduct() {
       let api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/product`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
       let httpMethod = "post";
       const vm = this;
       if (!vm.isNew) {
         api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
-        if(del){
-          httpMethod = 'delete';
-        }else{
-          httpMethod = "put";
-        }
+        httpMethod = "put";
       }
       this.$http[httpMethod](api, { data: vm.tempProduct }).then(response => {
         console.log(response.data);
@@ -261,6 +258,22 @@ export default {
           vm.getProducts();
         } else {
           $("#productModal").modal("hide");
+          vm.getProducts();
+          console.log("新增失敗");
+        }
+        // vm.products = response.data.products;
+      });
+    },
+    delProduct() {
+      const vm = this;
+      const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
+      this.$http.delete(api, { data: vm.tempProduct }).then(response => {
+        console.log(response.data);
+        if (response.data.success) {
+          $("#delProductModal").modal("hide");
+          vm.getProducts();
+        } else {
+          $("#delProductModal").modal("hide");
           vm.getProducts();
           console.log("新增失敗");
         }
