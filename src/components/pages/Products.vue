@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="vld-parent">
+        <loading :active.sync="isLoading"></loading>
+    </div>
     <div class="text-right mt-4">
       <button class="btn btn-primary" @click="openModal(true)">建立新的產品</button>
     </div>
@@ -63,9 +66,9 @@
                 <div class="form-group">
                   <label for="customFile">
                     或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                   </label>
-                  <input type="file" id="customFile" class="form-control" ref="files" />
+                  <input type="file" id="customFile" class="form-control" ref="files" @change="uploadFile" />
                 </div>
                 <img
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -216,15 +219,21 @@ export default {
     return {
       products: [],
       tempProduct: {},
-      isNew: false
+      isNew: false,
+      isLoading:false,
+      status:{
+        fileUploading: false,
+      }
     };
   },
   methods: {
     getProducts() {
       const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products?page=:page`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
       const vm = this;
+      vm.isLoading = true;
       this.$http.get(api).then(response => {
         console.log(response.data);
+        vm.isLoading = false;
         vm.products = response.data.products;
       });
     },
@@ -261,7 +270,6 @@ export default {
           vm.getProducts();
           console.log("新增失敗");
         }
-        // vm.products = response.data.products;
       });
     },
     delProduct() {
@@ -277,8 +285,29 @@ export default {
           vm.getProducts();
           console.log("新增失敗");
         }
-        // vm.products = response.data.products;
       });
+    },
+    uploadFile() {
+      console.log(this);
+      const uploadedFile = this.$refs.files.files[0];
+      const vm = this;
+      const formData = new FormData();
+      formData.append('file-to-upload',uploadedFile);
+      const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/upload`;
+      vm.status.fileUploading = true;
+      this.$http.post(url,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(response => {
+        console.log(response.data);
+        vm.status.fileUploading = false;
+        if(response.data.success){
+          // vm.tempProduct.imageUrl = response.data.imageUrl;
+          // console.log(vm.tempProduct);
+          vm.$set(vm.tempProduct,'imgUrl',response.data.imageUrl);
+        }
+      })
     }
   },
   created() {
