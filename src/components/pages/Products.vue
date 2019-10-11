@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="vld-parent">
-        <loading :active.sync="isLoading"></loading>
+      <loading :active.sync="isLoading"></loading>
     </div>
     <div class="text-right mt-4">
       <button class="btn btn-primary" @click="openModal(true)">建立新的產品</button>
@@ -19,8 +19,8 @@
         <tr v-for="(item,key) in products" :key="key">
           <td>{{item.category}}</td>
           <td>{{item.title}}</td>
-          <td class="text-right">{{item.origin_price}}</td>
-          <td class="text-right">{{item.price}}</td>
+          <td class="text-right">{{item.origin_price | currency}}</td>
+          <td class="text-right">{{item.price | currency}}</td>
           <td>
             <span v-if="item.is_enabled" class="text-success">啟用</span>
             <span v-else>未啟用</span>
@@ -32,6 +32,30 @@
         </tr>
       </tbody>
     </table>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" :class="{'disabled' : !pagination.has_pre}">
+          <a class="page-link" href="#" aria-label="Previous" @click.prevent="getProducts(pagination.current_page -1)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          v-for="page in pagination.total_pages"
+          :key="page"
+          :class="{'active': pagination.current_page === page}"
+        >
+          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{page}}</a>
+        </li>
+        <li class="page-item" :class="{'disabled' : !pagination.has_next}">
+          <a class="page-link" href="#" aria-label="Next" @click.prevent="getProducts(pagination.current_page +1)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
     <div
       class="modal fade"
       id="productModal"
@@ -68,7 +92,13 @@
                     或 上傳圖片
                     <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                   </label>
-                  <input type="file" id="customFile" class="form-control" ref="files" @change="uploadFile" />
+                  <input
+                    type="file"
+                    id="customFile"
+                    class="form-control"
+                    ref="files"
+                    @change="uploadFile"
+                  />
                 </div>
                 <img
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
@@ -218,23 +248,25 @@ export default {
   data() {
     return {
       products: [],
+      pagination: {},
       tempProduct: {},
       isNew: false,
-      isLoading:false,
-      status:{
-        fileUploading: false,
+      isLoading: false,
+      status: {
+        fileUploading: false
       }
     };
   },
   methods: {
-    getProducts() {
-      const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products?page=:page`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
+    getProducts(page = 1) {
+      const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products?page=${page}`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then(response => {
         console.log(response.data);
         vm.isLoading = false;
         vm.products = response.data.products;
+        vm.pagination = response.data.pagination;
       });
     },
     openModal(isNew, item) {
@@ -292,24 +324,26 @@ export default {
       const uploadedFile = this.$refs.files.files[0];
       const vm = this;
       const formData = new FormData();
-      formData.append('file-to-upload',uploadedFile);
+      formData.append("file-to-upload", uploadedFile);
       const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/upload`;
       vm.status.fileUploading = true;
-      this.$http.post(url,formData,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(response => {
-        console.log(response.data);
-        vm.status.fileUploading = false;
-        if(response.data.success){
-          // vm.tempProduct.imageUrl = response.data.imageUrl;
-          // console.log(vm.tempProduct);
-          vm.$set(vm.tempProduct,'imgUrl',response.data.imageUrl);
-        }else{
-              this.$bus.$emit('message:push',response.data.message,'danger');
-        }
-      })
+      this.$http
+        .post(url, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(response => {
+          console.log(response.data);
+          vm.status.fileUploading = false;
+          if (response.data.success) {
+            // vm.tempProduct.imageUrl = response.data.imageUrl;
+            // console.log(vm.tempProduct);
+            vm.$set(vm.tempProduct, "imgUrl", response.data.imageUrl);
+          } else {
+            this.$bus.$emit("message:push", response.data.message, "danger");
+          }
+        });
     }
   },
   created() {
