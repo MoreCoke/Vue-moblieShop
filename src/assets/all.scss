@@ -1,4 +1,7 @@
+//bootstrap
 @import "~bootstrap/scss/functions";
 @import "./helpers/variables";
 @import "~bootstrap/scss/bootstrap";
+//自定義
 @import "./dashbard";
+@import "./myscss/custom";
