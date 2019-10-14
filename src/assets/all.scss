@@ -4,4 +4,5 @@
 @import "~bootstrap/scss/bootstrap";
 //自定義
 @import "./dashbard";
-@import "./myscss/custom";
+@import "~@/assets/myscss/custom";
+@import "~@/assets/myscss/customSwiper";

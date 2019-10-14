@@ -1,108 +1,64 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#download">
-                DOWNLOAD
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#feature">FEATURES</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">CONTACT</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="bd-example">
-      <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-          <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item carousel-height bg-cover active" style="background-image:url(../../assets/img/xperia5.jpg)">
-            <!-- <img src="../../assets/img/xperia5.jpg" class="d-block w-100" alt="..." /> -->
-            <div class="carousel-caption d-none d-md-block">
-              <h5>First slide label</h5>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </div>
-          </div>
-          <div class="carousel-item carousel-height bg-cover" style="background-image:url(../../assets/img/reno3.jpg)">
-            <!-- <img src="../../assets/img/reno3.jpg" class="d-block w-100" alt="..." /> -->
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Second slide label</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
-          <div class="carousel-item carousel-height bg-cover" style="background-image:url(/src/assets/img/tim_cook.jpg)">
-            <!-- <img src="../../assets/img/tim_cook.jpg" class="d-block w-100" alt="" /> -->
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </div>
-          </div>
-          <!-- <div class="carousel-item carousel-height bg-cover" style="background-image:url()">
-            <img src="../../assets/img/tim_cook.jpg" class="d-block w-100" alt="" />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </div>
-          </div> -->
-        </div>
-        <a
-          class="carousel-control-prev"
-          href="#carouselExampleCaptions"
-          role="button"
-          data-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
+    <swiper :options="swiperOption" ref="mySwiper">
+      <!-- slides -->
+      <swiper-slide>
+        <a href="#" class="text-decoration-none" @click.prevent>
+          <div class="bg-cover carousel-1 carousel-height"></div>
         </a>
-        <a
-          class="carousel-control-next"
-          href="#carouselExampleCaptions"
-          role="button"
-          data-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
+      </swiper-slide>
+      <swiper-slide>
+        <a href="#" class="text-decoration-none" @click.prevent>
+          <div class="bg-cover carousel-2 carousel-height"></div>
         </a>
-      </div>
-    </div>
+      </swiper-slide>
+      <swiper-slide>
+        <a href="#" class="text-decoration-none" @click.prevent>
+          <div class="bg-cover carousel-3 carousel-height">
+            <div class="pl-6 pt-8 text-white">
+              <h2 class="headtitle">iPhone 11 Pro</h2>
+              <h5 class="subtitle">相機、顯示器、效能，一切如Pro其名。</h5>
+            </div>
+          </div>
+        </a>
+      </swiper-slide>
+      <!-- Optional controls -->
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
   </div>
 </template>
 <script>
 import $ from "jquery";
+import "swiper/dist/css/swiper.css";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
-  methods: {
-    navAnimation() {
-      $(window).scroll(function() {
-        $("nav").toggleClass("scrolled", $(this).scrollTop() > 20);
-      });
-    }
+  components: {
+    swiper,
+    swiperSlide
   },
-  mounted() {
-    this.navAnimation();
+  data() {
+    return {
+      swiperOption: {
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        }
+        // autoplay: {
+        //   disableOnInteraction: false
+        // }
+      }
+    };
   }
+  // methods: {
+  //   navAnimation() {
+  //     $(window).scroll(function() {
+  //       $("nav").toggleClass("scrolled", $(this).scrollTop() > 20);
+  //     });
+  //   }
+  // },
+  // mounted() {
+  //   this.navAnimation();
+  // }
 };
 </script>

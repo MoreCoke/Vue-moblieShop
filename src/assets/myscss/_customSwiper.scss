@@ -1,0 +1,15 @@
+.swiper-pagination .swiper-pagination-bullet-active {
+    border-radius: 0;
+    color: #ff7800 !important; /*orange color*/
+    background-color: #ff7800 !important; /*orange color*/
+    opacity: 1;
+  }
+  
+  /*other pagination*/
+  .swiper-pagination .swiper-pagination-bullet {
+    border-radius: 0;
+    color: #ffffff;
+    background-color: #ffffff;
+    opacity: 1;
+    width: 2rem;
+  }
