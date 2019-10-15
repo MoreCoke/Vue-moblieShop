@@ -58,22 +58,16 @@
             </ul>
           </li>
           <li>
-            <span>各大官網</span>
-            <ul class="list-unstyled">
+            <span>追蹤我們</span>
+            <ul class="list-unstyled text-center">
               <li>
-                <a href="#" @click.prevent>Apple</a>
+                <a href="#" @click.prevent><i class="fab fa-facebook-square fa-2x"></i></a>
               </li>
               <li>
-                <a href="#" @click.prevent>Sony</a>
+                <a href="#" @click.prevent><i class="fab fa-instagram fa-2x"></i></a>
               </li>
               <li>
-                <a href="#" @click.prevent>OppO</a>
-              </li>
-              <li>
-                <a href="#" @click.prevent>hTc</a>
-              </li>
-              <li>
-                <a href="#" @click.prevent>Huwei</a>
+                <a href="#" @click.prevent><i class="fab fa-line fa-2x"></i></a>
               </li>
             </ul>
           </li>
