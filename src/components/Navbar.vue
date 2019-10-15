@@ -19,7 +19,7 @@
           <a class="nav-link" href="#" @click.prevent>關於我們</a>
         </li>
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#" @click.prevent>後台管理</a>
+          <a class="nav-link" href="#" @click.prevent="goSignin">後台管理</a>
         </li>
         <li class="nav-item text-nowrap">
           <!-- <a class="nav-link" href="#" @click.prevent="signout">登出</a> -->
@@ -32,6 +32,9 @@
 <script>
 export default {
   methods: {
+    goSignin(){
+      this.$router.push("/login");
+    },
     signout() {
       const api = `${process.env.APIPATH}logout`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
       console.log(api);
