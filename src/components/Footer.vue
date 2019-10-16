@@ -28,7 +28,7 @@
                 <a href="#" @click.prevent>台北中山店</a>
               </li>
               <li>
-                <a href="#" @click.prevent>台北中山店</a>
+                <a href="#" @click.prevent>台北西門店</a>
               </li>
               <li>
                 <a href="#" @click.prevent>新北新莊店</a>
