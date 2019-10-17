@@ -10,7 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      //cors解決
+      '/unsplashdata': {                        // 自訂 local 端的位置
+        target: 'https://api.unsplash.com/',  // 遠端 URL Domain
+        changeOrigin: true,
+        pathRewrite: {
+          '^/unsplashdata': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
