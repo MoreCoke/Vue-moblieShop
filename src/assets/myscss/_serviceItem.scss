@@ -1,0 +1,64 @@
+.main-service {
+  width: 100%;
+  height: 41vh;
+  @include media-breakpoint-up(md) {
+    height: 81vh;
+  }
+}
+.other-service {
+  width: 100%;
+  height: 20vh;
+  @include media-breakpoint-up(md) {
+    height: 40vh;
+  }
+}
+.service-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+  &:hover {
+    
+    .main-service,
+    .other-service {
+      transform: scale(1.2);
+      transition: all 0.5s;
+    }
+    .service-cover {
+      background-color: rgba($secondary, 0.6);
+      transition: background-color 0.5s;
+    }
+    .service-text {
+      bottom: 40%;
+      transition: all 0.5s;
+    }
+  }
+}
+.service-cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background-color: transparent;
+}
+.service-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  font-size: 2rem;
+  font-family: "Noto Serif TC", serif;
+  @include media-breakpoint-up(xl) {
+    align-items: flex-end;
+    font-size: 2.5rem;
+  }
+}
