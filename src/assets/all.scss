@@ -2,11 +2,13 @@
 @import "~bootstrap/scss/functions";
 @import "./helpers/variables";
 @import "~bootstrap/scss/bootstrap";
-//自定義
-@import "./myscss/mixin";
-@import "./myscss/reset";
-@import "./myscss/guestHome";
-@import "./dashbard";
-@import "~@/assets/myscss/custom";
-@import "~@/assets/myscss/footer";
-@import "~@/assets/myscss/productCard";
+//全域自訂
+@import "./myscss/vendor/mixin";
+@import "./myscss/vendor/reset";
+@import "~@/assets/myscss/vendor/custom";
+@import "~@/assets/myscss/vendor/footer";
+@import "~@/assets/myscss//vendor/productCard";
+//訪客
+@import "./myscss/guest/guestHome";
+//後台
+@import "./myscss/admin/dashbard";
