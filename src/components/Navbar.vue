@@ -1,13 +1,7 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <router-link class="navbar-brand col-sm-3 col-md-2 mr-0" to="guests/home">速達通訊</router-link>
-      <input
-        class="form-control form-control-dark w-100"
-        type="text"
-        placeholder="想找什麼"
-        aria-label="Search"
-      />
+    <nav class="navbar navbar-expand navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
+      <router-link class="navbar-brand col-sm-3 col-md-2 mr-0" to="/guest/home">速達通訊</router-link>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="#" @click.prevent>最新消息</a>
@@ -17,6 +11,9 @@
         </li>
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="#" @click.prevent>關於我們</a>
+        </li>
+        <li class="nav-item text-nowrap">
+          <router-link class="nav-link" to="/guest/productlist">商品列表</router-link>
         </li>
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="#" @click.prevent="signin">後台管理</a>

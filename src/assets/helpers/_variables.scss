@@ -139,8 +139,8 @@ $spacers: map-merge(
     4: ($spacer * 1.5),
     5: ($spacer * 3),
     6: ($spacer * 4.5),
-    7: ($spacer * 6),
-    8: ($spacer * 20),
+    7: ($spacer * 5),
+    8: ($spacer * 6),
   ),
   $spacers
 );
@@ -1124,3 +1124,12 @@ $positions: static, relative, absolute, fixed, sticky !default;
 
 $print-page-size:                   a3 !default;
 $print-body-min-width:              map-get($grid-breakpoints, "lg") !default;
+
+//自訂
+$font-size-1:0.5rem;
+$font-size-2:1rem;
+$font-size-3:1.5rem;
+$font-size-4:2rem;
+$font-size-5:2.5rem;
+$font-size-6:3rem;
+$font-size-7:3.5rem;

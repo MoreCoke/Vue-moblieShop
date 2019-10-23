@@ -3,10 +3,10 @@
 @import "./helpers/variables";
 @import "~bootstrap/scss/bootstrap";
 //自定義
+@import "./myscss/mixin";
+@import "./myscss/reset";
+@import "./myscss/guestHome";
 @import "./dashbard";
 @import "~@/assets/myscss/custom";
-@import "~@/assets/myscss/customSwiper";
 @import "~@/assets/myscss/footer";
 @import "~@/assets/myscss/productCard";
-@import "~@/assets/myscss/adProductCard";
-@import "~@/assets/myscss/serviceitem";

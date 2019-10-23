@@ -5,9 +5,10 @@ import Orders from '@/components/Orders';
 import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
 //父組件
-import frontend from '@/components/pages/Frontend';
+import Guest from '@/components/pages/Guest';
 //訪客組件
-import guestHome from '@/components/guests/guestHome'
+import GuestHome from '@/components/guests/GuestHome';
+import GuestProductList from "@/components/guests/GuestProductList"
 
 Vue.use(VueRouter);
 const originalPush = VueRouter.prototype.push
@@ -19,7 +20,7 @@ export default new VueRouter({
   routes: [
     {
       path: '*',
-      redirect: 'guests/home',
+      redirect: 'guest/home',
     },
     {
       path: '/login',
@@ -27,14 +28,19 @@ export default new VueRouter({
       component: Login,
     },
     {
-      path: '/guests',
-      name: 'Guests',
-      component: frontend,
+      path: '/guest',
+      name: 'Guest',
+      component: Guest,
       children: [
         {
           path: 'home',
           name: 'Home',
-          component: guestHome,
+          component: GuestHome,
+        },
+        {
+          path: 'productlist',
+          name: "Productlist",
+          component : GuestProductList,
         }
       ]
     },

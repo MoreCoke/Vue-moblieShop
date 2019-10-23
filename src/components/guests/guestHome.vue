@@ -2,120 +2,133 @@
   <div>
     <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide class="bg-cover carousel-1 carousel-height">
-        <!-- <a href="#" class="text-decoration-none" @click.prevent>
-          <div class="bg-cover carousel-1"></div>
-        </a> -->
-      </swiper-slide>
-      <swiper-slide class="bg-cover carousel-2 carousel-height">
-        <!-- <a href="#" class="text-decoration-none" @click.prevent>
-          <div class="bg-cover carousel-2"></div>
-        </a> -->
-      </swiper-slide>
-      <swiper-slide class="bg-cover carousel-3 carousel-height">>
-        <!-- <a href="#" class="text-decoration-none" @click.prevent>
-          <div class="bg-cover carousel-3">
-            <div class="pl-6 pt-8 text-white">
-              <h2 class="headtitle">iPhone 11 Pro</h2>
-              <h5 class="subtitle">相機、顯示器、效能，一切如Pro其名。</h5>
-            </div>
+      <swiper-slide
+        class="bg-cover carousel-height"
+        v-for="(item,index) in swiperData"
+        :key="index"
+        :style="item.imgpath"
+      >
+        <div class="ad-news justify-content-start align-items-center align-items-md-end">
+          <div class="frosted-zone">
+            <h2 class="headtitle">{{item.title}}</h2>
+            <h5 class="subtitle">{{item.text}}</h5>
           </div>
-        </a> -->
-        <div class="pl-6 pt-8 text-white">
-              <h2 class="headtitle">iPhone 11 Pro</h2>
-              <h5 class="subtitle">相機、顯示器、效能，一切如Pro其名。</h5>
-            </div>
+        </div>
       </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
-    <section class="bg-cover px-3 py-5" :style="bgc[0]">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-10">
-            <h2 class="text-center text-white font-weight-bold">最新商品</h2>
-            <div class="row">
-              <div class="col-md-4" v-for="(item,index) in newProduct" :key="index">
-                <a href="#" class="text-decoration-none" @click.prevent>
-                  <ad-product :adcard="item" />
-                </a>
-              </div>
+    <section class="py-1 container-fluid">
+      <a href="#" class="service" @click.prevent v-for="(item,index) in serviceItem" :key="index">
+        <div class="service-item bg-cover" :style="item.imgpath">
+          <div class="service-textzone">
+            <h4 class="service-title">{{item.title}}</h4>
+            <h5 class="service-subtitle">{{item.text}}</h5>
+          </div>
+        </div>
+      </a>
+    </section>
+    <section class="bg-cover p-5" :style="bgc[0]">
+      <div class="text-right">
+        <div class="headtitle text-white">為你而活，非你莫屬</div>
+        <div class="subtitle text-white">邀您一同共享跨世代的喜悅。</div>
+      </div>
+    </section>
+    <section class="container-fluid mb-8">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="topic">最新商品</div>
+          <div class="row">
+            <div class="col-md-4" v-for="(item,index) in newProduct" :key="index">
+              <a href="#" class="text-decoration-none" @click.prevent>
+                <ad-product :adcard="item" />
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section class="py-4">
+    <section class="bg-success">
       <div class="container">
-        <h2 class="text-center font-weight-bold">服務類別</h2>
-        <div class="row no-gutters">
-          <div class="col-lg-3">
-            <div class="row no-gutters">
-              <div class="col-6 col-md-12 p-1">
-                <a href="#" @click.prevent>
-                  <div class="service-wrap">
-                    <div class="service-cover"></div>
-                    <div
-                      class="other-service bg-cover"
-                      style="background-image:url(https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)"
-                    ></div>
-                    <div class="service-text">售後服務</div>
-                  </div>
-                </a>
+        <div class="row">
+          <div class="col-md-6 mb-5">
+            <div class="topic">汰舊換新</div>
+            <div class="row">
+              <div class="col-4">
+                <div class="renew-product">2</div>
               </div>
-              <div class="col-6 col-md-12 p-1">
-                <a href="#" @click.prevent>
-                  <div class="service-wrap">
-                    <div class="service-cover"></div>
-                    <div
-                      class="other-service bg-cover"
-                      style="background-image:url(https://images.unsplash.com/photo-1451958683454-47a7f2adc864?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=966&q=80)"
-                    ></div>
-                    <div class="service-text">手機配件</div>
-                  </div>
-                </a>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
+              </div>
+              <div class="col-4">
+                <div class="renew-product">2</div>
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="d-flex flex-row flex-lg-column w-100 h-100 p-1">
-              <a href="#" @click.prevent class="w-100 h-100">
-                <div class="service-wrap">
-                  <div class="service-cover"></div>
-                  <div
-                    class="main-service bg-cover"
-                    style="background-image:url(https://images.unsplash.com/photo-1570125517852-0f82b4c1f74d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80)"
-                  ></div>
-                  <div class="service-text">所有手機</div>
+          <div class="col-md-6">
+            <div class="renew">
+              <div class="renew-imgzone">
+                <div class="renew-img bg-cover"></div>
+              </div>
+            </div>
+            <div class="topic">這裡總有款適合您的手機!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="p-4">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <img class="renew-imgcenter" :src="bgc[1]" alt />
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="py-5 renew-textzone">
+                  <i class="fas fa-3x fa-user-md text-success"></i>
+                  <h3>現場評估</h3>
+                  <p>由我們專業人員評估您的舊手機使用狀態計算折舊。</p>
                 </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="row no-gutters">
-              <div class="col-6 col-md-12 p-1">
-                <a href="#" @click.prevent>
-                  <div class="service-wrap">
-                    <div class="service-cover"></div>
-                    <div
-                      class="other-service bg-cover"
-                      style="background-image:url(https://images.unsplash.com/photo-1511885912508-36118d773e55?ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80)"
-                    ></div>
-                    <div class="service-text">領取優惠</div>
-                  </div>
-                </a>
               </div>
-              <div class="col-6 col-md-12 p-1">
-                <a href="#" @click.prevent>
-                  <div class="service-wrap">
-                    <div class="service-cover"></div>
-                    <div
-                      class="other-service bg-cover"
-                      style="background-image:url(https://images.unsplash.com/photo-1528475775637-ed767f76e6b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80)"
-                    ></div>
-                    <div class="service-text">顧客評價</div>
-                  </div>
-                </a>
+              <div class="col-md-6">
+                <div class="py-5 renew-textzone">
+                  <i class="fas fa-3x fa-hand-holding-usd text-success"></i>
+                  <h3>現金折扣</h3>
+                  <p>舊手機型號越新，折抵越高，最高可享$12,000!</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="py-5 renew-textzone">
+                  <i class="fas fa-3x fa-diagnoses text-success"></i>
+                  <h3>款式多樣</h3>
+                  <p>安卓、蘋果手機通通都有，任君挑選!</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="py-5 renew-textzone">
+                  <i class="fas fa-3x fa-child text-success"></i>
+                  <h3>回收舊機</h3>
+                  <p>我們會幫您的舊手機找到新的主人,或是送回原廠分解零件，環保利用!</p>
+                </div>
               </div>
             </div>
           </div>
@@ -143,83 +156,117 @@ export default {
           el: ".swiper-pagination",
           clickable: true
         },
-        // autoplay: {
-        //   disableOnInteraction: false
-        // }
+        autoplay: {
+          disableOnInteraction: false
+        }
       },
+      swiperData: [
+        {
+          imgpath: {
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1543409743-b5ed0eb0c5b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)"
+          },
+          title: "OPPO R17",
+          text: "夜的美比白天溫柔，全面升級超有感。"
+        },
+        {
+          imgpath: {
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1551355738-1875b6664915?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1225&q=80)"
+          },
+          title: "Google Pixel 3",
+          text: "全新Google智慧助理隨你差遣。"
+        },
+        {
+          imgpath: {
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1570976278927-39de20093775?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)"
+          },
+          title: "iPhone 11 Pro",
+          text: "相機、顯示器、效能，一切如Pro其名。"
+        },
+        {
+          imgpath: {
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1551261752-c4d1f4faa041?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)"
+          },
+          title: "Samsung Galaxy S10",
+          text: "123度超廣角鏡頭，突破視野極限。"
+        }
+      ],
       bgc: [
         {
           backgroundImage:
             "url(" + require("@/assets/img/iPhone-11-Pro.jpg") + ")",
-          backgroundAttachment: "fixed"
+          backgroundAttachment: "fixed",
+          height: "30vw"
+        },
+        require("@/assets/img/hweil_p30pro.png")
+      ],
+      serviceItem: [
+        {
+          imgpath: {
+            backgroundImage: "url(" + require("@/assets/img/1.jpg") + ")"
+          },
+          title: "無線藍芽耳機",
+          text: "輕便小巧，簡單生活。"
         },
         {
-          backgroundImage:
-            "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
+          imgpath: {
+            backgroundImage: "url(" + require("@/assets/img/2.jpg") + ")"
+          },
+          title: "智慧手錶",
+          text: "紀錄健康動起來!"
+        },
+        {
+          imgpath: {
+            backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")"
+          },
+          title: "3C手機",
+          text: "款式多樣，應有盡有。"
+        },
+        {
+          imgpath: {
+            backgroundImage: "url(" + require("@/assets/img/5.jpg") + ")"
+          },
+          title: "優惠折扣",
+          text: "玩小遊戲抽折扣!"
         }
       ],
       newProduct: [
         {
           name: "iPhone 11 Pro",
-          text: "裝逼神器，窮人炫富的最好方式",
+          text: "後置三鏡頭 | 5.8 吋 OLED",
           imgpath: {
             backgroundImage:
               "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
+          },
+          logo: {
+            backgroundImage: "url(" + require("@/assets/img/apple.svg") + ")"
           }
         },
         {
           name: "Sony Xperia 5 ",
-          text: "裝逼神器，窮人炫富的最好方式",
+          text: "眼控對焦 | 八核心處理",
           imgpath: {
             backgroundImage:
-              "url(" + require("@/assets/img/sony_xperia5.jpg") + ")"
+              "url(" + require("@/assets/img/xperia-5-primary.png") + ")"
+          },
+          logo: {
+            backgroundImage: "url(" + require("@/assets/img/sony.svg") + ")"
           }
         },
         {
           name: "Samsung Galaxy Note 10 Plus",
-          text: "裝逼神器，窮人炫富的最好方式",
+          text: "八核心處理器 | O 極限螢幕",
           imgpath: {
             backgroundImage:
               "url(" +
               require("@/assets/img/samsung_galaxy_note10_plus.jpg") +
               ")"
-          }
-        }
-      ],
-      serviceItem: [
-        {
-          name: "科技新聞",
-          imgpath: {
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)"
-          }
-        },
-        {
-          name: "手機周邊",
-          imgpath: {
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1451958683454-47a7f2adc864?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=966&q=80)"
-          }
-        },
-        {
-          name: "主賣商品",
-          imgpath: {
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1570125517852-0f82b4c1f74d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80)"
-          }
-        },
-        {
-          name: "優惠折扣",
-          imgpath: {
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1511885912508-36118d773e55?ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80)"
-          }
-        },
-        {
-          name: "顧客評價",
-          imgpath: {
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1570503795330-7c6fd74cd950?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1356&q=80)"
+          },
+          logo: {
+            backgroundImage: "url(" + require("@/assets/img/samsung.svg") + ")"
           }
         }
       ],
