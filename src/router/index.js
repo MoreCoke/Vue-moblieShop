@@ -38,7 +38,7 @@ export default new VueRouter({
           component: GuestHome,
         },
         {
-          path: 'productlist',
+          path: 'productlist/:brand',
           name: "Productlist",
           component : GuestProductList,
         }

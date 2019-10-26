@@ -3,7 +3,7 @@
     <div class="wrapper">
       <Navbar />
       <Alert />
-      <main class="pt-5">
+      <main class="customnav-pt">
         <router-view></router-view>
       </main>
     </div>

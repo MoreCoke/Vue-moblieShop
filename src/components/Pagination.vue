@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-3">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item" :class="{'disabled' : !propPage.has_pre}">

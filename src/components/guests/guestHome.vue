@@ -278,7 +278,6 @@ export default {
       const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
       const vm = this;
       vm.$http.get(url).then(response => {
-        console.log(response);
         vm.products = response.data.products;
       });
     }

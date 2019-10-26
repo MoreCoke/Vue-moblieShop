@@ -45,3 +45,8 @@ body,
     background: $info;
   }
 }
+.custom-sticky{
+  position: sticky;
+  z-index: 1020;
+  top: 116px;
+}
