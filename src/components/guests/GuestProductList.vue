@@ -9,7 +9,29 @@
           <GuestSidebar />
         </div>
         <div class="col-md-9">
-          
+          <div class="product-bar">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <!-- <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  data-toggle="pill"
+                  @click="getTargetProductList('全部商品')"
+                >全部商品</a>
+              </li> -->
+              <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="pill">手機</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill">手錶</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill">耳機</a>
+              </li>-->
+              <li class="nav-item" v-for="(item,index) in productType" :key="index">
+                <a class="nav-link" data-toggle="pill" @click="getTargetProductList(item,index)"  :class="{ 'active': index === currentTypeIndex}">{{item}}</a>
+              </li>
+            </ul>
+          </div>
           <div class="row">
             <div class="col-sm-4" v-for="(item,index) in showProducts" :key="index">
               <ProductCard :card="item" />
@@ -41,9 +63,12 @@ export default {
         has_next: null
       },
       pageMaxCard: 9,
-      brandProducts: [],
+      productType: ["全部商品","手機", "手錶", "耳機"],
+      targetProducts: [],
       showProducts: [],
-      isLoading: false
+      isLoading: false,
+      // allActive:true,
+      currentTypeIndex:0,
     };
   },
   methods: {
@@ -56,25 +81,39 @@ export default {
         vm.products = response.data.products;
         console.log(response.data);
         vm.isLoading = false;
-        vm.getBrandProductList();
+        // vm.getBrandProductList();
+        vm.getTargetProductList("全部商品");
       });
     },
-    //撈所有資料到前端，依品牌分類商品
-    getBrandProductList() {
+    //撈所有資料到前端，依品牌和商品類型分類商品
+    getTargetProductList(type,index) {
       let vm = this;
       let brand = vm.$route.params.brand;
-      if (brand === "全部品牌") {
-        vm.brandProducts = vm.products.slice(0);
-      } else {
-        vm.brandProducts = vm.products.filter(item => brand === item.category);
+      if(brand === "全部品牌"){
+        if(type === "全部商品"){
+          vm.targetProducts = vm.products.slice(0);
+          vm.currentTypeIndex = 0;
+        }else{
+          vm.targetProducts = vm.products.filter(item => type === item.unit);
+          vm.currentTypeIndex = index;
+        }
+      }else{
+        if(type === "全部商品"){
+          vm.targetProducts = vm.products.filter(item => brand === item.category);
+          vm.currentTypeIndex = 0;
+        }else{
+          vm.targetProducts = vm.products.filter(item => brand === item.category && type === item.unit);
+          vm.currentTypeIndex = index;
+        }
       }
+      console.log(vm.currentTypeIndex,index);
       vm.productsPagination();
     },
     //根據選擇品牌商品數量做分頁
     productsPagination(page = 1) {
       let vm = this;
       vm.pagination.total_pages = Math.ceil(
-        vm.brandProducts.length / vm.pageMaxCard
+        vm.targetProducts.length / vm.pageMaxCard
       );
       vm.pagination.current_page = page;
       vm.pagination.current_page < vm.pagination.total_pages
@@ -90,12 +129,12 @@ export default {
       let vm = this;
       let startcard = (page - 1) * 9;
       let endcard = page * 9;
-      vm.showProducts = vm.brandProducts.slice(startcard, endcard);
+      vm.showProducts = vm.targetProducts.slice(startcard, endcard);
     }
   },
   watch: {
     $route() {
-      this.getBrandProductList();
+      this.getTargetProductList("全部商品",0);
     }
   },
   created() {
