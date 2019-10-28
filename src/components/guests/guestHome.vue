@@ -5,12 +5,12 @@
       <swiper-slide
         class="bg-cover carousel-height"
         v-for="(item,index) in swiperData"
-        :key="index"
+        :key="`swiper-${index}`"
         :style="item.imgpath"
       >
         <div class="ad-news justify-content-start align-items-center align-items-md-end">
           <div class="frosted-zone">
-            <h2 class="headtitle">{{item.title}}</h2>
+            <h2 class="headtitle mb-2">{{item.title}}</h2>
             <h5 class="subtitle">{{item.text}}</h5>
           </div>
         </div>
@@ -19,16 +19,41 @@
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
     <section class="py-1 container-fluid">
-      <a href="#" class="service" @click.prevent v-for="(item,index) in serviceItem" :key="index">
+      <!-- <a href="#" class="service" @click.prevent v-for="(item,index) in serviceItem" :key="index">
         <div class="service-item bg-cover" :style="item.imgpath">
           <div class="service-textzone">
             <h4 class="service-title">{{item.title}}</h4>
             <h5 class="service-subtitle">{{item.text}}</h5>
           </div>
         </div>
-      </a>
+      </a>-->
+      <router-link
+        class="service"
+        :to="otherbgc[2].routerPath"
+      >
+        <div class="service-discount bg-cover" :style="otherbgc[2].imgpath">
+          <div class="service-textzone">
+            <h4 class="service-title">{{otherbgc[2].title}}</h4>
+            <h5 class="service-subtitle">{{otherbgc[2].text}}</h5>
+          </div>
+        </div>
+      </router-link>
+      <router-link
+        class="service"
+        v-for="(item,index) in serviceItem"
+        :key="`product-${index}`"
+        :to="item.routerPath"
+        @click.native="emitProductType(item['typeName'],item['typeIndex'])"
+      >
+        <div class="service-item bg-cover" :style="item.imgpath">
+          <div class="service-textzone">
+            <h4 class="service-title">{{item.title}}</h4>
+            <h5 class="service-subtitle">{{item.text}}</h5>
+          </div>
+        </div>
+      </router-link>
     </section>
-    <section class="bg-cover p-5" :style="bgc[0]">
+    <section class="bg-cover p-5" :style="otherbgc[0]">
       <div class="text-right">
         <div class="headtitle text-white">為你而活，非你莫屬</div>
         <div class="subtitle text-white">邀您一同共享跨世代的喜悅。</div>
@@ -39,7 +64,7 @@
         <div class="col-lg-10">
           <div class="topic">最新商品</div>
           <div class="row">
-            <div class="col-md-4" v-for="(item,index) in newProduct" :key="index">
+            <div class="col-md-4" v-for="(item,index) in newProduct" :key="`newProduct-${index}`">
               <a href="#" class="text-decoration-none" @click.prevent>
                 <ad-product :adcard="item" />
               </a>
@@ -98,7 +123,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <img class="renew-imgcenter" :src="bgc[1]" alt />
+            <img class="renew-imgcenter" :src="otherbgc[1].imgpath" alt />
           </div>
           <div class="col-md-6">
             <div class="row">
@@ -194,43 +219,65 @@ export default {
           text: "123度超廣角鏡頭，突破視野極限。"
         }
       ],
-      bgc: [
+      otherbgc: [
         {
           backgroundImage:
             "url(" + require("@/assets/img/iPhone-11-Pro.jpg") + ")",
           backgroundAttachment: "fixed",
           height: "30vw"
         },
-        require("@/assets/img/hweil_p30pro.png")
+        {
+          imgpath: require("@/assets/img/hweil_p30pro.png")
+        },
+        {
+          imgpath: {
+            backgroundImage: "url(" + require("@/assets/img/6.jpg") + ")"
+          },
+          title: "優惠折扣",
+          text: "玩小遊戲抽折扣!",
+          routerPath: "/guest/productlist/huawei"
+        }
       ],
       serviceItem: [
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/1.jpg") + ")"
+            backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")"
           },
-          title: "無線藍芽耳機",
-          text: "輕便小巧，簡單生活。"
+          title: "3C手機",
+          text: "款式多樣，應有盡有。",
+          typeIndex: 1,
+          typeName: "手機",
+          routerPath: "/guest/productlist/全部品牌"
         },
         {
           imgpath: {
             backgroundImage: "url(" + require("@/assets/img/2.jpg") + ")"
           },
           title: "智慧手錶",
-          text: "紀錄健康動起來!"
+          text: "紀錄健康動起來!",
+          typeIndex: 2,
+          typeName: "手錶",
+          routerPath: "/guest/productlist/全部品牌"
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/3.jpg") + ")"
+            backgroundImage: "url(" + require("@/assets/img/1.jpg") + ")"
           },
-          title: "3C手機",
-          text: "款式多樣，應有盡有。"
+          title: "無線藍芽耳機",
+          text: "輕便小巧，簡單生活。",
+          typeIndex: 3,
+          typeName: "耳機",
+          routerPath: "/guest/productlist/全部品牌"
         },
         {
           imgpath: {
-            backgroundImage: "url(" + require("@/assets/img/5.jpg") + ")"
+            backgroundImage: "url(" + require("@/assets/img/7.jpg") + ")"
           },
-          title: "優惠折扣",
-          text: "玩小遊戲抽折扣!"
+          title: "所有商品",
+          text: "種類豐富，應有盡有!",
+          typeIndex: 0,
+          typeName: "全部商品",
+          routerPath: "/guest/productlist/全部品牌"
         }
       ],
       newProduct: [
@@ -275,10 +322,17 @@ export default {
   },
   methods: {
     getData() {
-      const url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
-      const vm = this;
+      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
+      let vm = this;
       vm.$http.get(url).then(response => {
         vm.products = response.data.products;
+        console.log(response.data);
+      });
+    },
+    emitProductType(type, index) {
+      let vm = this;
+      this.$nextTick(() => {
+        vm.$bus.$emit("HomeProductTypeIndex", type, index);
       });
     }
   },
