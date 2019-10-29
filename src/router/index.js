@@ -8,7 +8,8 @@ import Products from '@/components/pages/Products';
 import Guest from '@/components/pages/Guest';
 //訪客組件
 import GuestHome from '@/components/guests/GuestHome';
-import GuestProductList from "@/components/guests/GuestProductList"
+import GuestProductList from "@/components/guests/GuestProductList";
+import GuestProductDetail from "@/components/guests/GuestProductDetail";
 
 Vue.use(VueRouter);
 const originalPush = VueRouter.prototype.push
@@ -41,7 +42,12 @@ export default new VueRouter({
           path: 'productlist/:brand',
           name: "Productlist",
           component : GuestProductList,
-        }
+        },
+        {
+          path: 'productdetail/:id',
+          name: "Productdetail",
+          component : GuestProductDetail,
+        },
       ]
     },
     {

@@ -7,10 +7,10 @@
 @import "./myscss/vendor/reset";
 @import "~@/assets/myscss/vendor/custom";
 @import "~@/assets/myscss/vendor/footer";
-@import "~@/assets/myscss/vendor/productCard";
 @import "~@/assets/myscss/vendor/customnav";
 //訪客
 @import "./myscss/guest/guestHome";
 @import "./myscss/guest/guestProductlist";
+@import "./myscss/guest/guestProductDetail";
 //後台
 @import "./myscss/admin/dashbard";

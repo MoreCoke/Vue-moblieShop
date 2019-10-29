@@ -42,7 +42,7 @@
         class="service"
         v-for="(item,index) in serviceItem"
         :key="`product-${index}`"
-        :to="item.routerPath"
+        to="/guest/productlist/全部品牌"
         @click.native="emitProductType(item['typeName'],item['typeIndex'])"
       >
         <div class="service-item bg-cover" :style="item.imgpath">
@@ -247,7 +247,6 @@ export default {
           text: "款式多樣，應有盡有。",
           typeIndex: 1,
           typeName: "手機",
-          routerPath: "/guest/productlist/全部品牌"
         },
         {
           imgpath: {
@@ -257,7 +256,6 @@ export default {
           text: "紀錄健康動起來!",
           typeIndex: 2,
           typeName: "手錶",
-          routerPath: "/guest/productlist/全部品牌"
         },
         {
           imgpath: {
@@ -267,7 +265,6 @@ export default {
           text: "輕便小巧，簡單生活。",
           typeIndex: 3,
           typeName: "耳機",
-          routerPath: "/guest/productlist/全部品牌"
         },
         {
           imgpath: {
@@ -277,7 +274,6 @@ export default {
           text: "種類豐富，應有盡有!",
           typeIndex: 0,
           typeName: "全部商品",
-          routerPath: "/guest/productlist/全部品牌"
         }
       ],
       newProduct: [
