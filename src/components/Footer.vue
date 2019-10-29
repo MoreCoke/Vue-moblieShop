@@ -19,7 +19,7 @@
           <ul
             class="list-unstyled d-flex justify-content-around align-items-center info-list text-white"
           >
-            <li>
+            <li class="d-md-none d-lg-block">
               <span>全台分店</span>
               <ul class="list-unstyled">
                 <li>
