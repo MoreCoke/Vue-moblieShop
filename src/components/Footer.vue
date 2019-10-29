@@ -1,6 +1,6 @@
 <template>
   <div class="px-3 py-4 bg-primary">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-4">
           <div class="d-flex flex-column justify-content-center h-100">
@@ -19,7 +19,7 @@
           <ul
             class="list-unstyled d-flex justify-content-around align-items-center info-list text-white"
           >
-            <li class="d-md-none d-lg-block">
+            <li class="d-none d-lg-block">
               <span>全台分店</span>
               <ul class="list-unstyled">
                 <li>
