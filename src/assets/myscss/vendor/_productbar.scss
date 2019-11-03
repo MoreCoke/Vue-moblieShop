@@ -2,7 +2,7 @@
   a {
     text-decoration: none;
     &:hover {
-      background-color: $primary;
+      background-color: lighten($primary,10%);
       color: white;
     }
   }

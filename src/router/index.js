@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Dashboard from '@/components/Dashboard';
-import Orders from '@/components/Orders';
 import Login from '@/components/pages/Login';
-import Products from '@/components/pages/Products';
 //父組件
 import Guest from '@/components/pages/Guest';
+import Admin from '@/components/pages/Admin';
 //訪客組件
 import GuestHome from '@/components/guests/GuestHome';
 import GuestProductList from "@/components/guests/GuestProductList";
 import GuestProductDetail from "@/components/guests/GuestProductDetail";
+//後台組件
+import AdminProductList from '@/components/admin/AdminProductList';
+import AdminCoupon from "@/components/admin/AdminCoupon";
+import AdminOrderList from '@/components/admin/AdminOrderList';
 
 Vue.use(VueRouter);
 const originalPush = VueRouter.prototype.push
@@ -52,21 +54,27 @@ export default new VueRouter({
     },
     {
       path: '/admin',
-      name: 'Dashboard',
-      component: Dashboard,
+      name: 'Admin',
+      component: Admin,
       children: [
         {
           path: 'products',
           name: 'Products',
-          component: Products,
+          component: AdminProductList,
           meta: { requiresAuth: true },
         },
         {
           path: 'orders',
           name: 'Orders',
-          component: Orders,
+          component: AdminOrderList,
           meta: { requiresAuth: true },
         },
+        {
+          path: 'coupons',
+          name:'Coupons',
+          component: AdminCoupon,
+          meta:{ requiresAuth : true},
+        }
       ]
     },
   ]

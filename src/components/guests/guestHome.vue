@@ -27,10 +27,7 @@
           </div>
         </div>
       </a>-->
-      <router-link
-        class="service"
-        :to="otherbgc[2].routerPath"
-      >
+      <router-link class="service" :to="otherbgc[2].routerPath">
         <div class="service-discount bg-cover" :style="otherbgc[2].imgpath">
           <div class="service-textzone">
             <h4 class="service-title">{{otherbgc[2].title}}</h4>
@@ -65,9 +62,9 @@
           <div class="topic">最新商品</div>
           <div class="row">
             <div class="col-md-4" v-for="(item,index) in newProduct" :key="`newProduct-${index}`">
-              <a href="#" class="text-decoration-none" @click.prevent>
+              <router-link class="text-decoration-none" :to="item.routerpath">
                 <ad-product :adcard="item" />
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -79,32 +76,13 @@
           <div class="col-md-6 mb-5">
             <div class="topic">汰舊換新</div>
             <div class="row">
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
-              </div>
-              <div class="col-4">
-                <div class="renew-product">2</div>
+              <div class="col-4" v-for="(item,index) in random" :key="`renew-${index}`">
+                <router-link
+                  class="renew-product bg-cover"
+                  :title="item.title"
+                  :to="`/guest/productdetail/${item.id}`"
+                  :style="{backgroundImage:`url(${item.imgUrl})`}"
+                ></router-link>
               </div>
             </div>
           </div>
@@ -246,7 +224,7 @@ export default {
           title: "3C手機",
           text: "款式多樣，應有盡有。",
           typeIndex: 1,
-          typeName: "手機",
+          typeName: "手機"
         },
         {
           imgpath: {
@@ -255,7 +233,7 @@ export default {
           title: "智慧手錶",
           text: "紀錄健康動起來!",
           typeIndex: 2,
-          typeName: "手錶",
+          typeName: "手錶"
         },
         {
           imgpath: {
@@ -264,7 +242,7 @@ export default {
           title: "無線藍芽耳機",
           text: "輕便小巧，簡單生活。",
           typeIndex: 3,
-          typeName: "耳機",
+          typeName: "耳機"
         },
         {
           imgpath: {
@@ -273,13 +251,14 @@ export default {
           title: "所有商品",
           text: "種類豐富，應有盡有!",
           typeIndex: 0,
-          typeName: "全部商品",
+          typeName: "全部商品"
         }
       ],
       newProduct: [
         {
           name: "iPhone 11 Pro",
           text: "後置三鏡頭 | 5.8 吋 OLED",
+          routerpath:'/guest/productdetail/-LseWhNSDZAaoE-L2VqN',
           imgpath: {
             backgroundImage:
               "url(" + require("@/assets/img/iphone11pro.jpg") + ")"
@@ -291,6 +270,7 @@ export default {
         {
           name: "Sony Xperia 5 ",
           text: "眼控對焦 | 八核心處理",
+          routerpath:'/guest/productdetail/-LrnKPvMhdwPiRhofsjQ',
           imgpath: {
             backgroundImage:
               "url(" + require("@/assets/img/xperia-5-primary.png") + ")"
@@ -302,6 +282,7 @@ export default {
         {
           name: "Samsung Galaxy Note 10 Plus",
           text: "八核心處理器 | O 極限螢幕",
+          routerpath:'/guest/productdetail/-Lse_PHBDKpMPI5kunSH',
           imgpath: {
             backgroundImage:
               "url(" +
@@ -313,7 +294,8 @@ export default {
           }
         }
       ],
-      products: []
+      products: [],
+      random: []
     };
   },
   methods: {
@@ -323,6 +305,7 @@ export default {
       vm.$http.get(url).then(response => {
         vm.products = response.data.products;
         console.log(response.data);
+        vm.getRandomProduct(...vm.products);
       });
     },
     emitProductType(type, index) {
@@ -330,6 +313,17 @@ export default {
       this.$nextTick(() => {
         vm.$bus.$emit("HomeProductTypeIndex", type, index);
       });
+    },
+    getRandomProduct(...data) {
+      let vm = this;
+      let len = data.length;
+      vm.random = [];
+      while (vm.random.length < 9) {
+        let r = Math.floor(Math.random() * len);
+        if (vm.random.indexOf(data[r]) === -1) {
+          vm.random.push(data[r]);
+        }
+      }
     }
   },
   created() {

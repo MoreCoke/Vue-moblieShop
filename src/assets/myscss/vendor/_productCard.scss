@@ -94,3 +94,17 @@
     }
   }
 }
+
+.noproduct{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-weight: bold;
+  font-size: $font-size-5;
+  color: $secondary;
+  @include media-breakpoint-down(md){
+    font-size: $font-size-3;
+  }
+}

@@ -51,19 +51,22 @@
       <div class="collapse navbar-collapse" id="mynav2">
         <ul class="customnav-group">
           <li>
-            <a class href="#" @click.prevent>最新消息</a>
+            <a href="#" @click.prevent>最新消息</a>
           </li>
           <li>
-            <a class href="#" @click.prevent>優惠活動</a>
+            <a href="#" @click.prevent>優惠活動</a>
           </li>
           <li>
-            <a class href="#" @click.prevent>關於我們</a>
+            <a href="#" @click.prevent>關於我們</a>
           </li>
           <li>
-            <router-link class to="/guest/productlist/全部品牌">商品列表</router-link>
+            <router-link to="/guest/productlist/全部品牌">商品列表</router-link>
           </li>
           <li>
-            <a class href="#" @click.prevent="signin">後台管理</a>
+            <a href="#" @click.prevent="signin">後台管理</a>
+          </li>
+          <li>
+            <a href="#" @click.prevent="signout" v-if="isSignin">登出</a>
           </li>
         </ul>
       </div>
@@ -79,21 +82,25 @@ export default {
       logo: require("@/assets/img/logo.png"),
       objClass:{
         'open':false,
-      }
+      },
+      isSignin:false,
     };
   },
   methods: {
-    signin() {
+    //檢查登入狀態
+    checkSignin(){
       const api = `${process.env.APIPATH}api/user/check`;
       const vm = this;
       this.$http.post(api).then(response => {
-        console.log("check: ", response.data);
-        if (response.data.success) {
+        vm.isSignin = response.data.success;
+      });
+    },
+    signin() {
+      if (this.isSignin) {
           this.$router.push("/admin/products");
         } else {
           this.$router.push("/login");
         }
-      });
     },
     signout() {
       const api = `${process.env.APIPATH}logout`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
@@ -103,6 +110,7 @@ export default {
         console.log(response.data);
         if (response.data.success) {
           vm.$router.push("/guests/home");
+          vm.isSignin = false;
         }
       });
     },
@@ -112,7 +120,13 @@ export default {
       });
     },
   },
+  watch:{
+    $route(){
+      this.checkSignin();
+    }
+  },
   mounted() {
+    this.checkSignin();
     this.navAnimation();
   }
 };

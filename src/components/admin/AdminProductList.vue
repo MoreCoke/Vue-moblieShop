@@ -3,7 +3,7 @@
     <div class="vld-parent">
       <loading :active.sync="isLoading"></loading>
     </div>
-    <div class="text-right mt-4">
+    <div class="text-right">
       <button class="btn btn-primary" @click="openModal(true)">建立新的產品</button>
     </div>
     <table class="table mt-4">
@@ -246,7 +246,6 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then(response => {
-        console.log(response.data);
         vm.isLoading = false;
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
@@ -276,14 +275,14 @@ export default {
         httpMethod = "put";
       }
       this.$http[httpMethod](api, { data: vm.tempProduct }).then(response => {
-        console.log(response.data);
         if (response.data.success) {
           $("#productModal").modal("hide");
+          vm.$bus.$emit('message:push',response.data.message,'success');
           vm.getProducts();
         } else {
           $("#productModal").modal("hide");
+          vm.$bus.$emit('message:push',response.data.message,'warning');
           vm.getProducts();
-          console.log("新增失敗");
         }
       });
     },
@@ -291,19 +290,18 @@ export default {
       const vm = this;
       const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
       this.$http.delete(api, { data: vm.tempProduct }).then(response => {
-        console.log(response.data);
         if (response.data.success) {
           $("#delProductModal").modal("hide");
+          vm.$bus.$emit('message:push',response.data.message,'success');
           vm.getProducts();
         } else {
           $("#delProductModal").modal("hide");
+          vm.$bus.$emit('message:push',response.data.message,'warning');
           vm.getProducts();
-          console.log("新增失敗");
         }
       });
     },
     uploadFile() {
-      console.log(this);
       const uploadedFile = this.$refs.files.files[0];
       const vm = this;
       const formData = new FormData();
@@ -317,14 +315,14 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data);
           vm.status.fileUploading = false;
           if (response.data.success) {
             // vm.tempProduct.imageUrl = response.data.imageUrl;
             // console.log(vm.tempProduct);
+            vm.$bus.$emit('message:push','上傳成功','success');
             vm.$set(vm.tempProduct, "imgUrl", response.data.imageUrl);
           } else {
-            this.$bus.$emit("message:push", response.data.message, "danger");
+            this.$bus.$emit("message:push", '上傳失敗', "warning");
           }
         });
     }

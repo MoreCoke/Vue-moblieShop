@@ -1,56 +1,63 @@
 <template>
   <div>
-    <form class="form-signin" @submit.prevent="signin">
-      <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
+    <Alert />
+    <form class="form-login" @submit.prevent="signin">
+      <router-link class="login" to="/guest/home">
+        <img class="login-img" :src="logo" />
+        <span class="login-title">速達通訊</span>
+      </router-link>
+      <h1 class="h3 mb-3 font-weight-normal text-center">後台管理系統</h1>
+      <label for="inputEmail" class="text-primary h5 mb-2">電子信箱</label>
       <input
         type="email"
         id="inputEmail"
-        class="form-control"
-        placeholder="Email address"
+        class="form-control mb-3"
+        placeholder="請輸入信箱"
         v-model="user.username"
         required
         autofocus
       />
-      <label for="inputPassword" class="sr-only">Password</label>
+      <label for="inputPassword" class="text-primary h5 mb-2">管理者密碼</label>
       <input
         type="password"
         id="inputPassword"
-        class="form-control"
-        placeholder="Password"
+        class="form-control mb-3"
+        placeholder="請輸入密碼"
         v-model="user.password"
         required
       />
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
     </form>
   </div>
 </template>
 
 <script>
+import Alert from "../AlertMessage";
 export default {
-  name: "HelloWorld",
+  components:{
+    Alert
+  },
   data() {
     return {
       user: {
         username: "",
         password: ""
-      }
+      },
+      logo: require("@/assets/img/logo.png")
     };
   },
   methods: {
     signin() {
       const api = `${process.env.APIPATH}admin/signin`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
       const vm = this;
-      this.$http.post(api,vm.user).then(response => {
+      this.$http.post(api, vm.user).then(response => {
         console.log(response.data);
-        if(response.data.success) {
-          vm.$router.push('/admin/products');
+        if (response.data.success) {
+          vm.$router.push("/admin/products");
+          vm.$bus.$emit('message:push',response.data.message,'success');
+        }else{
+          vm.$bus.$emit('message:push',response.data.message,'warning');
         }
       });
     }

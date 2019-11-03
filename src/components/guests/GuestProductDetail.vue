@@ -23,7 +23,11 @@
               <i class="fas fa-thumbs-up"></i>
               商品特色
             </div>
-            <p class="detail-content mb-3" v-if="product.content" v-html="regexpSetting(product['content'])"></p>
+            <p
+              class="detail-content mb-3"
+              v-if="product.content"
+              v-html="regexpSetting(product['content'])"
+            ></p>
             <p class="detail-sale mb-3">
               特價: {{product.price | currency}}
               <span>原價: {{product.origin_price | currency}}</span>
@@ -58,7 +62,10 @@
             </h4>
             <ul class="cart-list">
               <li>
-                <div class="cart-nothing" v-if="cartProducts.carts && cartProducts.carts.length === 0">尚無商品</div>
+                <div
+                  class="cart-nothing"
+                  v-if="cartProducts.carts && cartProducts.carts.length === 0"
+                >尚無商品</div>
               </li>
               <li v-for="(item,index) in cartProducts.carts" :key="`cart-${index}`">
                 <div class="cart-listitem">
@@ -98,7 +105,11 @@
     </div>
     <div class="container">
       <div class="topic mb-5">商品描述</div>
-      <p class="detail-content" v-if="product.description" v-html="regexpSetting(product['description'])"></p>
+      <p
+        class="detail-content"
+        v-if="product.description"
+        v-html="regexpSetting(product['description'])"
+      ></p>
       <div class="topic mb-5">其他熱門商品</div>
       <div class="row">
         <div class="col-sm-4" v-for="(item,index) in random" :key="`random-${index}`">
@@ -109,6 +120,7 @@
   </div>
 </template>
 <script>
+import $ from "jquery";
 import ProductCard from "../ProductCard";
 export default {
   components: {
@@ -191,7 +203,7 @@ export default {
       vm.$http.post(url, { data: cart }).then(response => {
         vm.getCartData();
         vm.effect.currentLoading = "";
-        vm.$bus.$emit('message:push',response.data.message,'success');
+        vm.$bus.$emit("message:push", response.data.message, "success");
       });
     },
     //根據id刪除當前商品
@@ -202,11 +214,18 @@ export default {
       vm.$http.delete(url).then(response => {
         vm.getCartData();
         vm.effect.currentLoading = "";
-        vm.$bus.$emit('message:push',response.data.message,'warning');
+        vm.$bus.$emit("message:push", response.data.message, "warning");
       });
     },
     regexpSetting(txt) {
-      return txt.replace(/(.{1,}\n\b)/g,"<span class='description-title'>$1</span>").replace(/\n/g, "<br>");
+      return txt
+        .replace(/(.{1,}\n\b)/g, "<span class='description-title'>$1</span>")
+        .replace(/\n/g, "<br>");
+    },
+    setMagnify() {
+      $(document).ready(function() {
+        
+      });
     }
   },
   watch: {
@@ -217,6 +236,9 @@ export default {
   created() {
     this.getProductDetail();
     this.getCartData();
+  },
+  mounted() {
+    // this.setMagnify();
   }
 };
 </script>

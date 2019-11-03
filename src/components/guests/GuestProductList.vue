@@ -8,7 +8,7 @@
         <div class="col-md-3">
           <GuestSidebar />
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 h-100">
           <div class="product-bar">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
               <!-- <li class="nav-item">
@@ -42,7 +42,8 @@
               <ProductCard :card="item" />
             </div>
           </div>
-          <Pagination :prop-page="pagination" @pageData="productsPagination" />
+          <div v-if="showNoProduct" class="noproduct mb-3"><i class="far fa-2x fa-dizzy mb-3"></i>目前沒有相關商品!!</div>
+          <Pagination :prop-page="pagination" @pageData="productsPagination" v-if="!showNoProduct"/>
         </div>
       </div>
     </div>
@@ -72,7 +73,6 @@ export default {
       targetProducts: [],
       showProducts: [],
       isLoading: false,
-      // allActive:true,
       currentTypeIndex: 0,
       emitData: {
         type: '全部商品',
@@ -153,6 +153,12 @@ export default {
       let startcard = (page - 1) * 9;
       let endcard = page * 9;
       vm.showProducts = vm.targetProducts.slice(startcard, endcard);
+    },
+  },
+  computed:{
+    showNoProduct(){
+      console.log('showNoProduct觸發')
+      return (typeof this.showProducts !=='undefined' && this.showProducts.length===0)
     }
   },
   watch: {

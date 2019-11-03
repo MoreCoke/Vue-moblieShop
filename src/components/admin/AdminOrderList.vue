@@ -9,7 +9,7 @@
         <th width="100">是否付款</th>
       </thead>
       <tbody>
-        <tr v-for="(item,key) in products" :key="key">
+        <!-- <tr v-for="(item,key) in products" :key="key">
           <td>{{item.category}}</td>
           <td>{{item.title}}</td>
           <td class="text-right">{{item.origin_price | currency}}</td>
@@ -22,7 +22,7 @@
             <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
             <button class="btn btn-outline-danger btn-sm" @click="delModal(item)">刪除</button>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
   </div>
