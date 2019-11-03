@@ -5,7 +5,8 @@
     </div>
     <div class="row">
       <div class="col-md-4 d-flex align-items-center">
-        <div class="detail-img bg-cover" :style="{backgroundImage:`url(${product.imgUrl})`}"></div>
+        <!-- <div class="detail-img bg-cover" :style="{backgroundImage:`url(${product.imgUrl})`}"></div> -->
+        <product-zoomer :base-images="images" :base-zoomer-options="zoomerOptions" />
       </div>
       <div class="col-md-8">
         <div class="row mb-4">
@@ -120,11 +121,12 @@
   </div>
 </template>
 <script>
-import $ from "jquery";
+import ProductZoomer from "vue-product-zoomer";
 import ProductCard from "../ProductCard";
 export default {
   components: {
-    ProductCard
+    ProductCard,
+    ProductZoomer
   },
   data() {
     return {
@@ -135,6 +137,27 @@ export default {
       effect: {
         isLoading: false,
         currentLoading: ""
+      },
+      images: {
+        normal_size: [
+          {
+            id: 1,
+            url:
+              null
+          },
+        ]
+      },
+      zoomerOptions: {
+        zoomFactor: 3, // scale for zoomer
+        pane: "pane", // three type of pane ['pane', 'container-round', 'container']
+        hoverDelay: 300, // how long after the zoomer take effect
+        namespace: "zoomer", // add a namespace for zoomer component, useful when on page have mutiple zoomer
+        move_by_click: false, // move image by click thumb image or by mouseover
+        scroll_items: 0, // thumbs for scroll
+        choosed_thumb_border_color: "#bbdefb", // choosed thumb border color
+        scroller_button_style: "line",
+        scroller_position: "left",
+        zoomer_pane_position: "right"
       }
     };
   },
@@ -147,6 +170,7 @@ export default {
       vm.effect.isLoading = true;
       vm.$http.get(url).then(response => {
         vm.product = response.data.product;
+        vm.images.normal_size[0].url = vm.product.imgUrl;
         vm.getData();
         vm.effect.isLoading = false;
       });
@@ -221,11 +245,6 @@ export default {
       return txt
         .replace(/(.{1,}\n\b)/g, "<span class='description-title'>$1</span>")
         .replace(/\n/g, "<br>");
-    },
-    setMagnify() {
-      $(document).ready(function() {
-        
-      });
     }
   },
   watch: {
@@ -236,9 +255,6 @@ export default {
   created() {
     this.getProductDetail();
     this.getCartData();
-  },
-  mounted() {
-    // this.setMagnify();
   }
 };
 </script>
