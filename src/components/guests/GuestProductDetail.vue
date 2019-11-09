@@ -3,10 +3,10 @@
     <div class="vld-parent">
       <loading :active.sync="effect.isLoading"></loading>
     </div>
+    <Cart class="shopping-left" @delcart="getCartData" :addCart="cartProductsNum" />
     <div class="row">
       <div class="col-md-4 d-flex align-items-center">
-        <!-- <div class="detail-img bg-cover" :style="{backgroundImage:`url(${product.imgUrl})`}"></div> -->
-        <product-zoomer :base-images="images" :base-zoomer-options="zoomerOptions" />
+        <div class="detail-img bg-cover" :style="{backgroundImage:`url(${product.imgUrl})`}"></div>
       </div>
       <div class="col-md-8">
         <div class="row mb-4">
@@ -50,7 +50,7 @@
                 >目前金額: {{product.price*qty | currency}}</span>
                 <span class="detail-current-price mr-3" v-else>單次消費限購3台!</span>
               </div>
-              <button class="btn btn-primary" @click="addToCart(product['id'],qty)">
+              <button class="btn btn-primary" @click="checkCart(product['id'],qty)">
                 <i class="fas fa-spinner fa-spin" v-if="product.id === effect.currentLoading"></i>
                 <i class="fas fa-shopping-cart pr-2" v-else></i>
                 加入購物車
@@ -75,6 +75,7 @@
                       class="listitem-img mr-2"
                       :to="`/guest/productdetail/${item.product.id}`"
                       :style="{backgroundImage:`url(${item.product.imgUrl})`}"
+                      :title="item.product.title"
                     ></router-link>
                     <div class="mr-2">
                       <h4 class="listitem-title mb-2">{{item.product.title}}</h4>
@@ -83,9 +84,9 @@
                       >{{item.product.price|currency}} 共{{item.qty}}{{item.product.unit}}</p>
                     </div>
                   </div>
-                  <div class="w-100 d-flex justify-content-between align-items-center">
-                    <span class="listitem-total mr-3">{{item.final_total | currency}}</span>
-                    <button class="btn btn-outline-info" @click="delCartData(item.id)">
+                  <div class="w-100 d-flex justify-content-end align-items-center">
+                    <span class="listitem-total mr-3">{{item.total | currency}}</span>
+                    <button class="btn btn-outline-info" @click="delCartData(item.id,true)">
                       <i class="fas fa-spinner fa-spin" v-if="item.id === effect.currentLoading"></i>
                       <i class="fas fa-trash-alt" v-else></i>
                     </button>
@@ -94,9 +95,8 @@
               </li>
             </ul>
             <div class="cart-total">
-              總計金額:
-              <span class="mr-2">{{cartProducts.final_total | currency}}</span>
-              <button class="btn btn-info">
+              <span class="mr-2">總計金額:{{cartProducts.total | currency}}</span>
+              <button class="btn btn-info mt-3 mt-xl-0" :disabled="cartProductsNum === 0" @click="toOrderCheck">
                 <i class="fas fa-cash-register mr-2"></i>結帳去
               </button>
             </div>
@@ -121,43 +121,23 @@
   </div>
 </template>
 <script>
-import ProductZoomer from "vue-product-zoomer";
 import ProductCard from "../ProductCard";
+import Cart from "../Cart";
 export default {
   components: {
     ProductCard,
-    ProductZoomer
+    Cart
   },
   data() {
     return {
       product: {},
       random: [],
       cartProducts: {},
+      cartProductsNum: null,
       qty: 1,
       effect: {
         isLoading: false,
         currentLoading: ""
-      },
-      images: {
-        normal_size: [
-          {
-            id: 1,
-            url:
-              null
-          },
-        ]
-      },
-      zoomerOptions: {
-        zoomFactor: 3, // scale for zoomer
-        pane: "pane", // three type of pane ['pane', 'container-round', 'container']
-        hoverDelay: 300, // how long after the zoomer take effect
-        namespace: "zoomer", // add a namespace for zoomer component, useful when on page have mutiple zoomer
-        move_by_click: false, // move image by click thumb image or by mouseover
-        scroll_items: 0, // thumbs for scroll
-        choosed_thumb_border_color: "#bbdefb", // choosed thumb border color
-        scroller_button_style: "line",
-        scroller_position: "left",
-        zoomer_pane_position: "right"
       }
     };
   },
@@ -170,7 +150,7 @@ export default {
       vm.effect.isLoading = true;
       vm.$http.get(url).then(response => {
         vm.product = response.data.product;
-        vm.images.normal_size[0].url = vm.product.imgUrl;
+        // vm.images.normal_size[0].url = vm.product.imgUrl;
         vm.getData();
         vm.effect.isLoading = false;
       });
@@ -210,6 +190,7 @@ export default {
       let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart`;
       vm.$http.get(url).then(response => {
         vm.cartProducts = response.data.data;
+        vm.cartProductsNum = response.data.data.carts.length;
       });
     },
     //將商品和購買數量加入購物車
@@ -218,6 +199,7 @@ export default {
       let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart`;
       if (qty > 3) {
         qty = 3;
+        vm.$bus.$emit("每款商品限購3個", "warning");
       }
       const cart = {
         product_id: id,
@@ -231,20 +213,48 @@ export default {
       });
     },
     //根據id刪除當前商品
-    delCartData(id) {
+    delCartData(id, showmessage) {
       let vm = this;
       let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/cart/${id}`;
       vm.effect.currentLoading = id;
       vm.$http.delete(url).then(response => {
         vm.getCartData();
         vm.effect.currentLoading = "";
-        vm.$bus.$emit("message:push", response.data.message, "warning");
+        if (showmessage) {
+          vm.$bus.$emit("message:push", response.data.message, "warning");
+        }
       });
+    },
+    //檢查購物車是否有相同商品
+    checkCart(id, qty) {
+      let vm = this;
+      let sameProductNum = qty;
+      let sameProduct = vm.cartProducts.carts.find(
+        item => item.product.id === id
+      );
+      //如果購物車有相同商品
+      if (typeof sameProduct !== "undefined") {
+        sameProductNum += sameProduct.qty;
+        if (sameProductNum > 3) {
+          sameProductNum = 3;
+          vm.$bus.$emit("message:push", "每款商品限購3個", "warning");
+        } else {
+          vm.delCartData(sameProduct.id, false);
+          vm.addToCart(id, sameProductNum);
+        }
+      } else {
+        vm.addToCart(id, qty);
+      }
     },
     regexpSetting(txt) {
       return txt
         .replace(/(.{1,}\n\b)/g, "<span class='description-title'>$1</span>")
         .replace(/\n/g, "<br>");
+    },
+    toOrderCheck() {
+      if (this.cartProductsNum > 0) {
+        this.$router.push("/guest/productorder/check");
+      }
     }
   },
   watch: {

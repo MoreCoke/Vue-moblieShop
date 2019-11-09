@@ -27,11 +27,11 @@
           </div>
         </div>
       </a>-->
-      <router-link class="service" :to="otherbgc[2].routerPath">
-        <div class="service-discount bg-cover" :style="otherbgc[2].imgpath">
+      <router-link class="service" :to="otherbgc[1].routerPath">
+        <div class="service-discount bg-cover" :style="otherbgc[1].imgpath">
           <div class="service-textzone">
-            <h4 class="service-title">{{otherbgc[2].title}}</h4>
-            <h5 class="service-subtitle">{{otherbgc[2].text}}</h5>
+            <h4 class="service-title">{{otherbgc[1].title}}</h4>
+            <h5 class="service-subtitle">{{otherbgc[1].text}}</h5>
           </div>
         </div>
       </router-link>
@@ -50,7 +50,7 @@
         </div>
       </router-link>
     </section>
-    <section class="bg-cover p-5" :style="otherbgc[0]">
+    <section class="bg-cover p-5 iphone-bgc">
       <div class="text-right">
         <div class="headtitle text-white">為你而活，非你莫屬</div>
         <div class="subtitle text-white">邀您一同共享跨世代的喜悅。</div>
@@ -86,7 +86,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 mb-3">
             <div class="renew">
               <div class="renew-imgzone">
                 <div class="renew-img bg-cover"></div>
@@ -101,7 +101,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <img class="renew-imgcenter" :src="otherbgc[1].imgpath" alt />
+            <img class="renew-imgcenter" :src="otherbgc[0].imgpath" alt />
           </div>
           <div class="col-md-6">
             <div class="row">
@@ -198,12 +198,6 @@ export default {
         }
       ],
       otherbgc: [
-        {
-          backgroundImage:
-            "url(" + require("@/assets/img/iPhone-11-Pro.jpg") + ")",
-          backgroundAttachment: "fixed",
-          height: "30vw"
-        },
         {
           imgpath: require("@/assets/img/hweil_p30pro.png")
         },
@@ -320,7 +314,7 @@ export default {
       vm.random = [];
       while (vm.random.length < 9) {
         let r = Math.floor(Math.random() * len);
-        if (vm.random.indexOf(data[r]) === -1) {
+        if (vm.random.indexOf(data[r]) === -1 && data[r].unit==="台") {
           vm.random.push(data[r]);
         }
       }

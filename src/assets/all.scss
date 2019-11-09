@@ -9,10 +9,12 @@
 @import "~@/assets/myscss/vendor/footer";
 @import "~@/assets/myscss/vendor/customnav";
 @import "~@/assets/myscss/vendor/alertmsg";
+@import "~@/assets/myscss/vendor/shoppingCart";
 //訪客
 @import "~@/assets/myscss/guest/guestHome";
 @import "~@/assets/myscss/guest/guestProductlist";
 @import "~@/assets/myscss/guest/guestProductDetail";
+@import "~@/assets/myscss/guest/guestOrder";
 //後台
 @import "~@/assets/myscss/admin/adminbar";
 @import "~@/assets/myscss/admin/login";

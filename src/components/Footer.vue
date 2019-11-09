@@ -1,6 +1,6 @@
 <template>
   <div class="px-3 py-4 bg-primary">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-md-4">
           <div class="d-flex flex-column justify-content-center h-100">

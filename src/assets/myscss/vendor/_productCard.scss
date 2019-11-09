@@ -61,9 +61,13 @@
   &-textzone {
     padding: 0.5rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    @include media-breakpoint-up(lg) {
+    align-items: flex-end;
+    @include media-breakpoint-up(md){
+      flex-direction: column;
+    }
+    @include media-breakpoint-up(xl) {
       flex-direction: row;
       align-items: flex-end;
       margin-bottom: 0.8rem;

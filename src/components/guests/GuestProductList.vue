@@ -3,6 +3,7 @@
     <div class="vld-parent">
       <loading :active.sync="isLoading"></loading>
     </div>
+    <Cart class="shopping-right"/>
     <div class="container">
       <div class="row">
         <div class="col-md-3">
@@ -53,11 +54,13 @@
 import GuestSidebar from "../GuestSidebar";
 import ProductCard from "../ProductCard";
 import Pagination from "../Pagination";
+import Cart from "../Cart";
 export default {
   components: {
     GuestSidebar,
     ProductCard,
-    Pagination
+    Pagination,
+    Cart
   },
   data() {
     return {
@@ -99,7 +102,6 @@ export default {
       vm.isLoading = true;
       vm.$http.get(url).then(response => {
         vm.products = response.data.products;
-        console.log(response.data);
         vm.isLoading = false;
         vm.getTargetProductList(vm.emitData["type"], vm.emitData["index"]);
         // vm.getTargetProductList("全部商品",0);
@@ -157,7 +159,6 @@ export default {
   },
   computed:{
     showNoProduct(){
-      console.log('showNoProduct觸發')
       return (typeof this.showProducts !=='undefined' && this.showProducts.length===0)
     }
   },

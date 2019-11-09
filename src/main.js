@@ -6,20 +6,27 @@ import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay';
 import 'bootstrap';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VeeValidate, { Validator } from 'vee-validate';
+import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
+import VueI18n from 'vue-i18n';
 
 import App from './App';
 import router from './router';
 import './bus';
 import currencyFilter from './filters/currency';
-import capitalization from './filters/capitalization';
+import date from './filters/date';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 axios.defaults.withCredentials = true;
 
+Vue.use(VeeValidate);
+Validator.localize('zh_TW',zhTWValidate);
+Vue.use(VueI18n);
+
 Vue.component('Loading',Loading);
 Vue.filter('currency',currencyFilter);
-Vue.filter('capitalization',capitalization);
+Vue.filter('date',date);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

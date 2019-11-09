@@ -8,6 +8,7 @@ import Admin from '@/components/pages/Admin';
 import GuestHome from '@/components/guests/GuestHome';
 import GuestProductList from "@/components/guests/GuestProductList";
 import GuestProductDetail from "@/components/guests/GuestProductDetail";
+import GuestOrder from "@/components/guests/GuestOrder";
 //後台組件
 import AdminProductList from '@/components/admin/AdminProductList';
 import AdminCoupon from "@/components/admin/AdminCoupon";
@@ -50,6 +51,11 @@ export default new VueRouter({
           name: "Productdetail",
           component : GuestProductDetail,
         },
+        {
+          path: 'productorder/:step',
+          name: "Productorder",
+          component: GuestOrder,
+        }
       ]
     },
     {

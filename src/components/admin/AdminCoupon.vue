@@ -10,6 +10,7 @@
     <table class="table mt-4">
       <thead>
         <th>折價券名稱</th>
+        <th width="200">代碼內容</th>
         <th width="120">折扣%數</th>
         <th width="120">有效期限</th>
         <th width="100">是否啟用</th>
@@ -18,6 +19,7 @@
       <tbody>
         <tr v-for="(item,key) in coupons" :key="key">
           <td>{{item.title}}</td>
+          <td>{{item.code}}</td>
           <td>{{item.percent}}</td>
           <td>{{item.due_date}}</td>
           <td>
@@ -195,7 +197,7 @@ export default {
       $("#delCouponModal").modal("show");
     },
     updateCoupon() {
-      let api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupon`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
+      let api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupon`; 
       let httpMethod = "post";
       const vm = this;
       if (!vm.isNew) {

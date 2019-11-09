@@ -74,7 +74,7 @@ export default {
             vm.messages.splice(i, 1);
           }
         });
-      }, 3000);
+      }, 2500);
     }
   },
   created() {

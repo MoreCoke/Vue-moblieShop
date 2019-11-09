@@ -29,14 +29,14 @@
           </li>
         </ul>
       </div>
-    </nav> -->
+    </nav>-->
     <nav class="customnav navbar-expand-lg">
       <router-link class="logo" to="/guest/home">
         <img :src="logo" width="100px" alt />速達通訊
       </router-link>
       <button
         class="navbar-toggler ml-auto"
-        data-target="#mynav2"
+        data-target="#mynav"
         data-toggle="collapse"
         type="button"
         @click="objClass.open = !objClass.open"
@@ -48,25 +48,29 @@
           <span></span>
         </div>
       </button>
-      <div class="collapse navbar-collapse" id="mynav2">
+      <div class="collapse navbar-collapse" id="mynav">
         <ul class="customnav-group">
           <li>
-            <a href="#" @click.prevent>最新消息</a>
+            <a href="#" @click.prevent="hideNavbar">優惠活動</a>
           </li>
           <li>
-            <a href="#" @click.prevent>優惠活動</a>
+            <a href="#" @click.prevent="hideNavbar">關於我們</a>
+          </li>
+          <!-- <li>
+            <a href="#" @click.prevent="toOrderCheck">結帳買單</a>
+          </li> -->
+          <li>
+            <a href="#" @click.prevent="toProductList">商品列表</a>
           </li>
           <li>
-            <a href="#" @click.prevent>關於我們</a>
+            <a href="#" @click.prevent="signin">
+              <i class="fas fa-users-cog"></i><span>後台管理</span>
+            </a>
           </li>
           <li>
-            <router-link to="/guest/productlist/全部品牌">商品列表</router-link>
-          </li>
-          <li>
-            <a href="#" @click.prevent="signin">後台管理</a>
-          </li>
-          <li>
-            <a href="#" @click.prevent="signout" v-if="isSignin">登出</a>
+            <a href="#" @click.prevent="signout" v-if="isSignin">
+              <i class="fas fa-sign-out-alt"></i><span>登出</span>
+            </a>
           </li>
         </ul>
       </div>
@@ -80,15 +84,15 @@ export default {
   data() {
     return {
       logo: require("@/assets/img/logo.png"),
-      objClass:{
-        'open':false,
+      objClass: {
+        open: false
       },
-      isSignin:false,
+      isSignin: false
     };
   },
   methods: {
     //檢查登入狀態
-    checkSignin(){
+    checkSignin() {
       const api = `${process.env.APIPATH}api/user/check`;
       const vm = this;
       this.$http.post(api).then(response => {
@@ -97,31 +101,43 @@ export default {
     },
     signin() {
       if (this.isSignin) {
-          this.$router.push("/admin/products");
-        } else {
-          this.$router.push("/login");
-        }
+        this.$router.push("/admin/products");
+      } else {
+        this.$router.push("/login");
+      }
+      this.hideNavbar();
     },
     signout() {
       const api = `${process.env.APIPATH}logout`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
-      console.log(api);
       const vm = this;
       this.$http.post(api).then(response => {
-        console.log(response.data);
         if (response.data.success) {
           vm.$router.push("/guests/home");
           vm.isSignin = false;
         }
       });
+      this.hideNavbar();
+    },
+    toOrderCheck() {
+      this.$router.push("/guest/productorder/check");
+      this.hideNavbar();
+    },
+    toProductList() {
+      this.$router.push("/guest/productlist/全部品牌");
+      this.hideNavbar();
     },
     navAnimation() {
       $(window).scroll(function() {
         $(".customnav").toggleClass("scrolled", $(this).scrollTop() > 20);
       });
     },
+    hideNavbar() {
+      $("#mynav").collapse("hide");
+      this.objClass.open = false;
+    }
   },
-  watch:{
-    $route(){
+  watch: {
+    $route() {
       this.checkSignin();
     }
   },
