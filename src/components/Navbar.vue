@@ -51,10 +51,10 @@
       <div class="collapse navbar-collapse" id="mynav">
         <ul class="customnav-group">
           <li>
-            <a href="#" @click.prevent="hideNavbar">優惠活動</a>
+            <a href="#" @click.prevent="toPromotion">優惠活動</a>
           </li>
           <li>
-            <a href="#" @click.prevent="hideNavbar">關於我們</a>
+            <a href="#" @click.prevent="toAboutUs">關於我們</a>
           </li>
           <!-- <li>
             <a href="#" @click.prevent="toOrderCheck">結帳買單</a>
@@ -124,6 +124,14 @@ export default {
     },
     toProductList() {
       this.$router.push("/guest/productlist/全部品牌");
+      this.hideNavbar();
+    },
+    toAboutUs(){
+      this.$router.push("/guest/aboutus");
+      this.hideNavbar();
+    },
+    toPromotion(){
+      this.$router.push("/guest/promotion");
       this.hideNavbar();
     },
     navAnimation() {

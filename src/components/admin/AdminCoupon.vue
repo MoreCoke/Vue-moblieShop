@@ -171,10 +171,10 @@ export default {
   },
   methods: {
     getCoupons(page = 1) {
-      const api = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupons?page=${page}`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
-      const vm = this;
+      let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/admin/coupons?page=${page}`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
+      let vm = this;
       vm.isLoading = true;
-      this.$http.get(api).then(response => {
+      this.$http.get(url).then(response => {
         console.log(response.data);
         vm.isLoading = false;
         vm.coupons = response.data.coupons;

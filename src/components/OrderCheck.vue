@@ -27,9 +27,9 @@
           </div>
           <div class="coupon-inside">
             <i class="fas fa-3x fa-ticket-alt"></i>
-            <p>
-              請輸入95折扣碼:
-              <br />iloveflash
+            <p v-html="getCouponData">
+              <!-- 請輸入95折扣碼:
+              <br />iloveflash-->
             </p>
             <div class="d-flex justify-content-between align-items-end w-100">
               <div class="barcode">
@@ -45,7 +45,7 @@
         <div class="horizontial-coupon">
           <div class="coupon-content">
             <div class="coupon-title">
-              輸入95折扣碼: iloveflash
+              <span v-html="getCouponData"></span>
               <i class="fas fa-hand-point-down"></i>
             </div>
             <div class="coupon-text">
@@ -161,6 +161,8 @@ export default {
           if (response.data.success) {
             vm.$emit("updateCart");
             vm.$bus.$emit("message:push", response.data.message, "success");
+            vm.couponCode = "";
+            localStorage.clear();
           } else {
             vm.$bus.$emit("message:push", response.data.message, "warning");
           }
@@ -179,6 +181,18 @@ export default {
       let day = new Date();
       let today = `${day.getMonth() + 1}/${day.getDate()}`;
       return today;
+    },
+    getCouponData() {
+      let coupon = JSON.parse(localStorage.getItem("coupon"));
+      let couponInfo;
+      if (coupon) {
+        couponInfo = `請輸入${coupon.title.replace(/折價券/, "價碼")}: <br>${
+          coupon.code
+        }`;
+      } else {
+        couponInfo = `請輸入95折扣碼: <br>iloveflash`;
+      }
+      return couponInfo;
     }
   }
 };

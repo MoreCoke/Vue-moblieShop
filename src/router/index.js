@@ -9,6 +9,8 @@ import GuestHome from '@/components/guests/GuestHome';
 import GuestProductList from "@/components/guests/GuestProductList";
 import GuestProductDetail from "@/components/guests/GuestProductDetail";
 import GuestOrder from "@/components/guests/GuestOrder";
+import GuestAboutUs from "@/components/guests/GuestAboutUs";
+import GuestPromotion from "@/components/guests/GuestPromotion";
 //後台組件
 import AdminProductList from '@/components/admin/AdminProductList';
 import AdminCoupon from "@/components/admin/AdminCoupon";
@@ -55,6 +57,16 @@ export default new VueRouter({
           path: 'productorder/:step',
           name: "Productorder",
           component: GuestOrder,
+        },
+        {
+          path:'aboutus',
+          name: 'AboutUs',
+          component: GuestAboutUs,
+        },
+        {
+          path:'promotion',
+          name:'Promotion',
+          component:GuestPromotion,
         }
       ]
     },

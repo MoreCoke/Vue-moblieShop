@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="topic">訂單資料</div>
+    <div class="topic text-primary">訂單資料</div>
     <div class="order mb-3">
       <table class="order-table">
         <thead>
@@ -35,53 +35,55 @@
         <span>{{order.total |currency}}</span>
       </p>
     </div>
-    <div class="topic">訂購人資料</div>
+    <div class="topic text-primary">訂購人資料</div>
     <div class="userdata mb-4">
-      <table class="table" v-if="order.user">
-        <tbody>
-          <tr>
-            <th>下單日期 :</th>
-            <td>{{order.create_at | date}}</td>
-          </tr>
-          <tr>
-            <th>訂單編號 : </th>
-            <td>{{order.id}}</td>
-          </tr>
-          <tr>
-            <th>訂購人姓名 :</th>
-            <td>{{order.user.name}}</td>
-          </tr>
-          <tr>
-            <th>訂購人電話 :</th>
-            <td>{{order.user.tel}}</td>
-          </tr>
-          <tr>
-            <th>訂購人Email :</th>
-            <td>{{order.user.email}}</td>
-          </tr>
-          <tr>
-            <th>訂購人地址 :</th>
-            <td>{{order.user.address}}</td>
-          </tr>
-          <tr>
-            <th>付款狀態 :</th>
-            <td>
-              <span v-if="order.is_paid" class="text-success">付款完成</span>
-              <span v-else class="text-danger">尚未付款</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="text-center my-3">
-        <button class="btn btn-primary mx-auto" v-if="!order.is_paid" @click="payOrder(orderId)">
-        確認付款
-        <i class="fas fa-spinner fa-spin" v-if="effect.orderLoading"></i>
-        <i class="far fa-money-bill-alt" v-else></i>
-      </button>
-      <button class="btn btn-primary" v-else @click="toGuestHome">
-        回首頁
-        <i class="fas fa-home"></i>
-      </button>
+      <div class="userdata-inside">
+        <table class="table" v-if="order.user">
+          <tbody>
+            <tr>
+              <th>下單日期 :</th>
+              <td>{{order.create_at | date}}</td>
+            </tr>
+            <tr class="border-bottom">
+              <th>訂單編號 :</th>
+              <td>{{order.id}}</td>
+            </tr>
+            <tr>
+              <th>訂購人姓名 :</th>
+              <td>{{order.user.name}}</td>
+            </tr>
+            <tr>
+              <th>訂購人電話 :</th>
+              <td>{{order.user.tel}}</td>
+            </tr>
+            <tr>
+              <th>訂購人Email :</th>
+              <td>{{order.user.email}}</td>
+            </tr>
+            <tr class="border-bottom">
+              <th>訂購人地址 :</th>
+              <td>{{order.user.address}}</td>
+            </tr>
+            <tr>
+              <th>付款狀態 :</th>
+              <td>
+                <span v-if="order.is_paid" class="text-success">付款完成</span>
+                <span v-else class="text-danger">尚未付款</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center my-3">
+          <button class="btn btn-primary mx-auto" v-if="!order.is_paid" @click="payOrder(orderId)">
+            確認付款
+            <i class="fas fa-spinner fa-spin" v-if="effect.orderLoading"></i>
+            <i class="far fa-money-bill-alt" v-else></i>
+          </button>
+          <button class="btn btn-primary" v-else @click="toGuestHome">
+            回首頁
+            <i class="fas fa-home"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -90,7 +92,7 @@
 export default {
   data() {
     return {
-      orderId:this.$route.query.orderid,
+      orderId: this.$route.query.orderid,
       order: {},
       effect: {
         orderLoading: false
@@ -115,7 +117,7 @@ export default {
         vm.getOrderData(orderid);
       });
     },
-    toGuestHome(){
+    toGuestHome() {
       this.$router.push("/guest/home");
     }
   },

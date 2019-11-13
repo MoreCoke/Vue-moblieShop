@@ -207,7 +207,7 @@ export default {
           },
           title: "優惠折扣",
           text: "玩小遊戲抽折扣!",
-          routerPath: "/guest/productlist/huawei"
+          routerPath: "/guest/promotion"
         }
       ],
       serviceItem: [
@@ -288,7 +288,6 @@ export default {
           }
         }
       ],
-      products: [],
       random: []
     };
   },
@@ -297,9 +296,7 @@ export default {
       let url = `${process.env.APIPATH}api/${process.env.CUSTOMPATH}/products/all`;
       let vm = this;
       vm.$http.get(url).then(response => {
-        vm.products = response.data.products;
-        console.log(response.data);
-        vm.getRandomProduct(...vm.products);
+        vm.getRandomProduct(...response.data.products);
       });
     },
     emitProductType(type, index) {
@@ -311,14 +308,13 @@ export default {
     getRandomProduct(...data) {
       let vm = this;
       let len = data.length;
-      vm.random = [];
       while (vm.random.length < 9) {
         let r = Math.floor(Math.random() * len);
         if (vm.random.indexOf(data[r]) === -1 && data[r].unit==="台") {
           vm.random.push(data[r]);
         }
       }
-    }
+    },
   },
   created() {
     this.getData();

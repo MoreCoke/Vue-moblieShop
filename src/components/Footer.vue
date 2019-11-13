@@ -39,7 +39,7 @@
             <li>
               <span>客服專區</span>
               <ul class="list-unstyled">
-                <li>服務電話:(02)2911-1234</li>
+                <li>服務電話:(02)2019-1234</li>
                 <li>服務信箱:fastservice123@gmail.com</li>
                 <li>服務時間:24小時待線</li>
               </ul>

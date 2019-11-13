@@ -1,7 +1,7 @@
 .message{
   &-alert {
     position: fixed;
-    width: 160px;
+    min-width: 160px;
     min-height: 160px;
     border-radius: 10px;
     top: 50%;
