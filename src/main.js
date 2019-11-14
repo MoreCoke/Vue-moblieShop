@@ -37,11 +37,11 @@ new Vue({
 
 router.beforeEach((to, from, next) => {
   // ...
-  console.log('to',to,'from',from,'next',next);
+  // console.log('to',to,'from',from,'next',next);
   if(to.meta.requiresAuth){
       const api = `${process.env.APIPATH}api/user/check`; //'https://vue-course-api.hexschool.io/api/morecoke/products?page=:page';
       axios.post(api).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.success) {
           next();
         }else{
