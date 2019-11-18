@@ -7,10 +7,16 @@
             <span class="text-white h5 text-center mb-4">僅用做學習，禁止任何商業用途</span>
             <div class="d-flex justify-content-center align=items-center">
               <a href="https://github.com/MoreCoke/Vue-test" class="mx-2">
-                <i class="fab fa-lg fa-github fa-2x text-white"></i>
+                <i class="fab fa-lg fa-github fa-2x info-link"></i>
               </a>
               <a href="https://codepen.io/moreCoke" class="mx-2">
-                <i class="fab fa-codepen fa-2x text-white"></i>
+                <i class="fab fa-codepen fa-2x info-link"></i>
+              </a>
+              <a href="#" class="mx-2" @click.prevent="signin">
+                <i class="fas fa-users-cog fa-2x info-link"></i>
+              </a>
+              <a href="#" class="mx-2" @click.prevent="signout" v-if="isSignin">
+                <i class="fas fa-sign-out-alt fa-2x info-link"></i>
               </a>
             </div>
           </div>
@@ -85,5 +91,45 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isSignin: false
+    };
+  },
+  methods: {
+    checkSignin() {
+      const api = `${process.env.APIPATH}api/user/check`;
+      const vm = this;
+      this.$http.post(api).then(response => {
+        vm.isSignin = response.data.success;
+      });
+    },
+    signin() {
+      if (this.isSignin) {
+        this.$router.push("/admin/products");
+      } else {
+        this.$router.push("/login");
+      }
+    },
+    signout() {
+      const api = `${process.env.APIPATH}logout`;
+      const vm = this;
+      this.$http.post(api).then(response => {
+        if (response.data.success) {
+          vm.$router.push("/guests/home");
+          vm.isSignin = false;
+        }
+      });
+    }
+  },
+    watch: {
+    $route() {
+      this.checkSignin();
+    }
+  },
+  mounted(){
+    this.checkSignin();
+  }
+};
 </script>
